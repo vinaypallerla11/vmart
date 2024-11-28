@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate hook
 import "./ForgatUsername.css"
 
 const ForgotUsername = () => {
@@ -7,6 +8,7 @@ const ForgotUsername = () => {
   const [verificationStep, setVerificationStep] = useState(1); // Step 1: Enter email, Step 2: Enter OTP and new username
   const [otp, setOtp] = useState('');
   const [newUsername, setNewUsername] = useState('');
+  const navigate = useNavigate(); // Initialize navigate function
 
   // Handle Step 1: Submit email
   const handleEmailSubmit = async (e) => {
@@ -17,7 +19,7 @@ const ForgotUsername = () => {
     }
 
     try {
-      const response = await fetch('https://vmart-yxk6.onrender.com/forgot-username', {
+      const response = await fetch('http://localhost:8000/forgot-username', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }), // Send email as key
@@ -44,10 +46,9 @@ const ForgotUsername = () => {
       setMessage('Please enter both OTP and new username.');
       return;
     }
-    
 
     try {
-      const response = await fetch('https://vmart-yxk6.onrender.com/verify-username-otp', {
+      const response = await fetch('http://localhost:8000/verify-username', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp, newUsername }),
@@ -57,8 +58,8 @@ const ForgotUsername = () => {
 
       if (response.ok) {
         setMessage('Username reset successfully. You can now log in with your new username.');
-        // Optionally redirect to login page
-        // window.location.href = '/login';
+        // Redirect to login page
+        navigate('/login'); // Assuming '/login' is the route for the login page
       } else {
         setMessage(data.error || 'Invalid OTP. Please try again.');
       }

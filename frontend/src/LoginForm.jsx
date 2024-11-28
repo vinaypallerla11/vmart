@@ -41,7 +41,7 @@ const LoginForm = () => {
     e.preventDefault();
     const userDetails = { username, password };
     console.log(userDetails);
-    const url = 'https://vmart-yxk6.onrender.com/login';
+    const url = 'http://localhost:3000/login';
     const options = {
       method: 'POST',
       headers: {

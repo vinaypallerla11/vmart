@@ -10,11 +10,12 @@ import jwt from "jsonwebtoken";
 dotenv.config();
 const app = express();
 
-
 app.use(cors({
-  origin: 'https://vinaymartecom.vercel.app', // Adjust this to your frontend domain
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+  preflightContinue: true,
+  optionsSuccessStatus: 200,
 }));
 
 
@@ -141,6 +142,31 @@ app.post("/forgot-password", async (req, res) => {
   }
 });
 
+app.post("/verify-password-reset", async (req, res) => {
+  try {
+    const { email, code, newPassword } = req.body;
+
+    // Validate OTP and reset password logic
+    const user = await userModel.findOne({ email });
+    if (!user || user.otp !== code || Date.now() > user.otpExpiry) {
+      return res.status(400).json({ error: "Invalid or expired OTP" });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    user.otp = undefined;
+    user.otpExpiry = undefined;
+    await user.save();
+
+    res.json({ message: "Password reset successful" });
+  } catch (error) {
+    console.error("Error resetting password:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 // Reset Password
 app.post("/reset-password", async (req, res) => {
   const { email, otp, newPassword } = req.body;
@@ -182,22 +208,28 @@ app.post("/forgot-username", async (req, res) => {
 });
 
 // Verify Username
+// Verify OTP for Forgot Username (Step 2 - Username Retrieval)
 app.post("/verify-username", async (req, res) => {
-  const { email, otp } = req.body;
-  try {
-    const user = await userModel.findOne({ email });
-    if (!user || user.otp !== otp || Date.now() > user.otpExpiry) {
-      return res.status(400).json({ error: "Invalid or expired OTP" });
-    }
-
-    user.otp = undefined;
-    user.otpExpiry = undefined;
-    await user.save();
-    res.json({ username: user.username });
-  } catch (error) {
-    console.error("Error verifying username:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+  const { email, mobile, otp, newUsername } = req.body;
+  const user = email ? await userModel.findOne({ email }) : await userModel.findOne({ mobile });
+  
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
   }
+
+  // Check if OTP is valid and not expired
+  if (user.otp !== otp || Date.now() > user.otpExpiry) {
+    return res.status(400).json({ error: "Invalid or expired OTP" });
+  }
+
+  // Clear OTP after successful verification
+  user.otp = null;
+  user.otpExpiry = null;
+  user.username = newUsername;
+  await user.save();
+
+  // Return the username after OTP verification
+  res.json({ username: user.username });
 });
 
 // Get All Users (Admin/Testing)
