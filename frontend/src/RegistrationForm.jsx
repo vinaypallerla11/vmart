@@ -42,7 +42,7 @@ const RegistrationForm = () => {
     }
     
     console.log(userDetails);
-    const url = 'http://localhost:8000/registers/';
+    const url = 'https://vmart-yxk6.onrender.com/registers/';
     const options = {
       method: 'POST',
       headers: {
