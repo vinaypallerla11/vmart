@@ -19,7 +19,7 @@ const ForgotUsername = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/forgot-username', {
+      const response = await fetch('https://vmart-yxk6.onrender.com/forgot-username', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }), // Send email as key
@@ -48,7 +48,7 @@ const ForgotUsername = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/verify-username', {
+      const response = await fetch('https://vmart-yxk6.onrender.com/verify-username', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp, newUsername }),
