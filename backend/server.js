@@ -11,7 +11,11 @@ dotenv.config();
 const app = express();
 
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://vinaymartecom.vercel.app', // Adjust this to your frontend domain
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 
 
