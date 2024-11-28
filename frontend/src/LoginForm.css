@@ -1,0 +1,144 @@
+/* Login Form Container */
+.empForm {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Section Styling */
+.empForm .section {
+  background-color: #ffffff; /* White card background */
+  border: 1px solid #e2e2e2; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Logo */
+.empForm .vtrendz {
+  display: block;
+  margin: 0 auto 20px;
+  height: 50px; /* Adjust logo size */
+}
+
+/* Input Labels */
+.empForm .input-label {
+  font-weight: bold;
+  color: #333333; /* Dark text */
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Input Fields */
+.empForm .input-field {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #333333;
+}
+
+/* Input Field Focus Effect */
+.empForm .input-field:focus {
+  border-color: #0073e6; /* Amazon-like blue border */
+  box-shadow: 0 0 5px rgba(0, 115, 230, 0.5);
+  outline: none;
+}
+
+/* Highlight Error Input */
+.empForm .input-field.error {
+  border-color: #e63946; /* Red border for errors */
+}
+
+/* Button Styling */
+.empForm .submit-button,
+.empForm .create-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Submit Button */
+.empForm .submit-button {
+  background-color: #ff9900; /* Amazon-like orange */
+  color: #ffffff;
+}
+
+.empForm .submit-button:hover {
+  background-color: #e68a00;
+}
+
+/* Create Button */
+.empForm .create-button {
+  background-color: #0073e6; /* Amazon-like blue */
+  color: #ffffff;
+}
+
+.empForm .create-button:hover {
+  background-color: #005bb5;
+}
+
+/* Forgot Links */
+.empForm .forgot-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.empForm .forgot-button {
+  background: none;
+  border: none;
+  color: #0073e6;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+}
+
+.empForm .forgot-button:hover {
+  text-decoration: underline;
+}
+
+/* Password Input Container */
+.empForm .password-input-container {
+  position: relative;
+}
+
+.empForm .password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #333333;
+}
+
+/* Error Message */
+.empForm .error-msg {
+  color: #e63946;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .empForm {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .empForm {
+    max-width: 300px;
+  }
+}

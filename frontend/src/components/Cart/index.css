@@ -1,0 +1,219 @@
+/* General styling for the cart container */
+.cart-container {
+    max-width: 80%; /* 80% max width for larger screens */
+    margin: 20px auto; /* Centered with top and bottom margin */
+    padding: 20px; /* Added padding for a spacious feel */
+    border-radius: 8px; /* Rounded corners */
+}
+
+/* Heading styles */
+.cart-container h1 {
+    text-align: center; /* Centered heading */
+    margin-bottom: 20px; /* Space below heading */
+    font-size: 26px; /* Large heading size */
+    color: #333333; /* Dark color for better contrast */
+    font-family: 'Arial', sans-serif; /* Clean font family */
+}
+
+/* Styling for individual cart items */
+.cart-item {
+    display: flex; /* Flexbox for layout */
+    align-items: center; /* Center align items */
+    border: 1px solid #e0e0e0; /* Light border for separation */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f9f9f9; /* Slightly off-white background for items */
+    margin-bottom: 15px; /* Space between items */
+    padding: 15px; /* Padding for items */
+    transition: box-shadow 0.3s; /* Smooth shadow transition */
+}
+
+.cart-item:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+/* Image styling */
+.cart-item-image {
+    width: 50px; /* Set the image size to 50px */
+    height: 50px; /* Set height to 50px */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-radius: 5px; /* Rounded corners for images */
+    margin-right: 15px; /* Space between image and text */
+}
+
+/* Details container styling */
+.cart-item-details {
+    flex-grow: 1; /* Allow details to take available space */
+}
+
+/* Price and stock styling */
+.cart-item-price {
+    font-weight: bold; /* Bold text for prices */
+    color: #FF5722; /* Vibrant price color */
+    font-size: 18px; /* Increased font size for visibility */
+    margin: 5px 0; /* Margin for spacing */
+}
+
+.stock {
+    font-weight: bold; /* Bold text */
+    color: #4CAF50; /* Green color for 'In Stock' */
+}
+
+/* Star rating styling */
+.starimg {
+    margin-left: 5px; /* Space after star */
+}
+
+/* Button styling */
+button {
+    margin-top: 10px; /* Space above buttons */
+    padding: 10px 15px; /* Ample padding for clickable area */
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+    font-size: 14px; /* Button font size */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Clear Cart Button Styling */
+.clear-cart-button {
+    margin-top: 20px; /* Space above clear cart button */
+    padding: 10px 15px; /* Ample padding */
+    background-color: #dc3545; /* Red color for clear cart */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+    font-size: 14px; /* Button font size */
+}
+
+.clear-cart-button:hover {
+    background-color: #c82333; /* Darker shade on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Empty Cart Styling */
+.empty-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center content vertically */
+    height: 100vh; /* Make it take the full height of the viewport */
+    margin-top: 20px; /* Space above the empty cart message */
+}
+
+/* Cart Image Styling */
+.cartimage {
+    width: 150px; /* Larger width for a more prominent image */
+    height: auto; /* Maintain aspect ratio */
+    margin-top: 20px; /* Space below the message */
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 1200px) {
+    .cart-container {
+        max-width: 90%; /* Wider on medium screens */
+    }
+
+    .cart-container h1 {
+        font-size: 24px; /* Smaller heading size */
+    }
+
+    .cart-item {
+        padding: 12px; /* Less padding */
+    }
+
+    .cart-item-image {
+        width: 50px; /* Image size for medium screens */
+        height: 50px; /* Height for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .cart-container {
+        max-width: 95%; /* Almost full width on small screens */
+    }
+
+    .cart-container h1 {
+        font-size: 22px; /* Smaller heading size */
+    }
+
+    .cart-item {
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start; /* Align items at the start */
+    }
+
+    .cart-item-image {
+        width: 50px; /* Full width for small screens */
+        height: 50px; /* Maintain aspect ratio */
+        margin-bottom: 10px; /* Margin below image */
+    }
+
+    button, .clear-cart-button {
+        width: 100%; /* Full width buttons */
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-container {
+        padding: 15px; /* Less padding on extra small screens */
+    }
+
+    .cart-container h1 {
+        font-size: 20px; /* Smaller heading size */
+    }
+
+    .cart-item {
+        padding: 10px; /* Minimum padding */
+    }
+
+    .cart-item-image {
+        width: 40px; /* Further decreased image size */
+        height: 40px; /* Further decreased height */
+    }
+
+    button, .clear-cart-button {
+        font-size: 12px; /* Smaller button font size */
+    }
+}
+
+/* Media Queries for Empty Cart */
+@media (max-width: 768px) { /* Tablet and mobile */
+    .empty-cart {
+        height: auto; /* Allow natural height for smaller screens */
+        padding: 20px; /* Add some padding */
+    }
+
+    .cartimage {
+        width: 100px; /* Smaller icon for mobile */
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) { /* Tablet */
+    .empty-cart {
+        height: auto; /* Allow natural height */
+        padding: 30px; /* Adjust padding for tablet */
+    }
+
+    .cartimage {
+        width: 120px; /* Slightly smaller icon for tablet */
+    }
+}
+
+@media (min-width: 1025px) { /* Desktop */
+    .empty-cart {
+        height: auto; /* Allow natural height */
+        padding: 40px; /* Adjust padding for desktop */
+    }
+
+    .cartimage {
+        width: 150px; /* Default icon size for desktop */
+    }
+}

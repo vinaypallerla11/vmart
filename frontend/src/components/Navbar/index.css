@@ -1,0 +1,193 @@
+/* General styles */
+* {
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
+body {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.containerSection {
+  background-color: #232F3E; /* Dark blue background */
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+}
+
+.content-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* Ensure it takes full width */
+}
+
+.img-content {
+  height: 40px; /* Adjust logo height */
+  margin-right: -5px; /* Space between logos */
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0; /* Prevent shrinking of nav items */
+}
+
+/* Mobile Menu Icon */
+.mobile-menu-icon {
+  display: none; /* Hidden by default */
+  color: #FFFFFF; /* Icon color */
+  font-size: 24px; /* Adjust icon size */
+  cursor: pointer; /* Pointer cursor */
+}
+
+/* Dropdown styling */
+.dropdown {
+  position: absolute;
+  background-color: #37475A; /* Background color for dropdown */
+  width: 150px; /* Set a fixed width for the dropdown */
+  max-width: 150px; /* Set a maximum width for larger screens */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Ensure dropdown is above other content */
+  border-radius: 5px; /* Optional: add border-radius for rounded corners */
+  left: 0; /* Align dropdown to the left */
+  margin-top: 5px; /* Add space below the dropdown to avoid overlap */
+  margin-left:220px;
+}
+
+.dropdown ul {
+  list-style: none; /* No bullets */
+  padding: 10px 0; /* Space around the dropdown list */
+  margin: 0;
+}
+
+.dropdown li {
+  padding: 8px 12px; /* Space inside dropdown items */
+}
+
+.dropdown a {
+  color: #FFFFFF; /* White text */
+  text-decoration: none;
+  display: block; /* Make the link occupy full width */
+}
+
+/* Button styling */
+.button-container2 {
+  background-color: #FF6F61; /* Set a background color for the button */
+  color: #FFFFFF; /* Text color */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 2px 12px; /* Decrease vertical padding for a smaller height */
+  cursor: pointer; /* Pointer cursor */
+  height: 30px; /* Minimum width for the button */
+  width: 70px; /* Maximum width for the button */
+  text-align: center; /* Center text */
+  transition: background-color 0.3s; /* Smooth transition on hover */
+  margin-top:15px;
+}
+
+.button-container2:hover {
+  background-color: #E55A4D; /* Darken background on hover */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .desktop-menu {
+    display: none; /* Hide the desktop menu in mobile view */
+  }
+
+  .mobile-menu-icon {
+    display: block; /* Show menu icon in mobile view */
+  }
+
+  .nav-container ul {
+    flex-direction: column; /* Stack items vertically in mobile view */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+  }
+
+  .dropdown {
+    left: 0; /* Align dropdown to the left on mobile */
+    width: 100%; /* Full width on mobile */
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-menu-icon {
+    display: none; /* Hide the menu icon on desktop */
+  }
+
+  .nav-container ul {
+    display: flex; /* Use flexbox for horizontal alignment */
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
+  }
+
+  .nav-container li {
+    margin: 0 20px; /* Space between menu items */
+    list-style: none; /* No bullets for list items */
+    color: white;
+    line-height: 60px; /* Center text vertically in the navbar */
+  }
+}
+
+.mobile-cart-icon {
+  display: none; /* Hidden by default */
+  position: absolute;
+  right: 10px; /* Adjust positioning as needed */
+  top: 10px; /* Adjust positioning as needed */
+  cursor: pointer;
+  color: white;
+  margin-right:50px;
+  margin-top:11px;
+}
+
+.mobile-cart-icon .cart-count {
+  background: red; /* Example background color */
+  color: white; /* Example text color */
+  border-radius: 50%;
+  padding: 2px 5px;
+  font-size: 12px;
+  position: absolute;
+  right: -5px; /* Adjust as needed */
+  top: -5px; /* Adjust as needed */
+}
+
+@media (max-width: 768px) {
+  .mobile-cart-icon {
+    display: flex; /* Show on mobile */
+    align-items: center; /* Center items vertically */
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-cart-icon {
+    display: none; /* Hide on larger screens */
+  }
+}
+
+/* Add this to your navbar.css */
+.navbar {
+  position: sticky; /* Make the navbar sticky */
+  top: 0; /* Stick to the top */
+  background-color: #232F3E;
+  z-index: 1000; /* Ensure it stays on top of other elements */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+  width: 100%; /* Full width of the navbar */
+  transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.navbar.hidden {
+  transform: translateY(-100%); /* Hide navbar */
+}
+
+/* Navbar active link styling */
+.navbar .active {
+  font-weight: bold; /* Bold text for active link */
+  color: #FF6F61; /* Change color to indicate active link */
+}
+
+.navbar li {
+  transition: color 0.3s ease; /* Smooth transition on hover */
+}

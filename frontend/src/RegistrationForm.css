@@ -1,0 +1,165 @@
+.registration-form-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .heading {
+    text-align: center;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-label {
+    margin-bottom: 5px;
+  }
+  
+  .input-field {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .submit-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .submit-button-login {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .registration-form-container {
+      padding: 10px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .registration-form-container {
+      max-width: 400px;
+    }
+  }
+  
+  @media (max-width: 375px) {
+    .registration-form-container {
+      max-width: 300px;
+    }
+  }
+  
+  
+  .submit-button,
+  .submit-button-login {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: calc(50% - 10px); /* Set the width for both buttons */
+    font-size: 16px; /* Set font size */
+    margin: 0 5px; /* Add margin for spacing between buttons */
+  }
+  
+  .submit-button {
+    background-color: #007bff; /* Blue color */
+    color: white;
+  }
+  
+  .submit-button-login {
+    background-color: #28a745; /* Green color */
+    color: white;
+  }
+
+
+  .highlight {
+    border-color: red; /* Highlight empty input fields with red border */
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 5px; /* Add margin to the error message */
+  }
+
+  .highlight {
+    border-color: red; /* Highlight empty input fields with red border */
+  }
+  
+  .input-field {
+  margin-bottom: 10px;
+  padding: 8px 35px 8px 8px; /* Add padding on the right side for the icon */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.password-input-container {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 8px; /* Adjust position based on padding */
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.registration-form-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.heading {
+  text-align: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-label {
+  margin-bottom: 5px;
+}
+
+.input-field {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.password-input-container {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}

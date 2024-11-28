@@ -1,0 +1,100 @@
+
+/* index.css or ProductItem.css */
+
+.products-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: flex-start; /* Align items to the left */
+    padding: 10px; /* Padding around the container */
+}
+
+.product-item {
+    border: 1px solid #e7e7e7; /* Light border around product items */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px; /* Padding inside the item */
+    margin: 5px; /* Margin between items */
+    width: calc(24% - 5px); /* Four items per row with reduced margin */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation effect */
+    transition: transform 0.2s; /* Smooth transition for hover effect */
+    background-color: #fff; /* White background for product items */
+    margin-bottom: 10px;
+}
+
+.product-item:hover {
+    transform: scale(1.02); /* Slight zoom on hover */
+}
+
+.product-item img {
+    max-width: 100%; /* Ensure image fits within the container */
+    height: 200px; /* Fixed height for uniformity */
+    object-fit: contain; /* Maintain aspect ratio without stretching */
+    margin-bottom: 8px; /* Space between image and text */
+}
+
+.product-item h2 {
+    font-size: 18px; /* Adjust font size for title */
+    margin: 8px 0; /* Margin above and below title */
+    color: #333; /* Darker color for better readability */
+    font-family: 'Open Sans';
+    font-weight: none;
+}
+
+.product-item p {
+    font-size: 1em; /* Adjust font size for the price */
+    color: #b12704; /* Amazon-like color for price (red) */
+    margin: 4px 0; /* Margin above and below price */
+}
+
+.product-item button {
+    padding: 8px 12px; /* Padding inside the button */
+    background-color: #ffa41c; /* Amazon-like orange color */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded button corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transition: background-color 0.2s; /* Smooth transition for background color */
+    font-size: 0.9em; /* Font size for button text */
+}
+
+/* Button focus style for accessibility */
+.product-item button:focus {
+    outline: 2px solid #ff8c00; /* Orange outline for focus */
+}
+
+/* Button hover effect */
+.product-item button:hover {
+    background-color: #ff8c00; /* Darker orange on hover */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    .product-item {
+        width: calc(33.33% - 10px); /* Three items per row on medium screens */
+    }
+    
+}
+
+@media (max-width: 800px) {
+    .product-item {
+        width: calc(50% - 10px); /* Two items per row on smaller screens */
+    }
+}
+
+@media (max-width: 500px) {
+    .product-item {
+        width: calc(100% - 10px); /* One item per row on mobile */
+    }
+}
+
+.product-title{
+    font-family: 'Open Sans';
+    color:red;
+}
+
+.card-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    align-self: center;
+}

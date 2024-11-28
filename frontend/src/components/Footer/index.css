@@ -1,0 +1,150 @@
+/* General Styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .footer {
+    width: 100%; /* Ensures the footer spans full width */
+    background-color: #111; /* Footer background color */
+  }
+  
+  .container {
+    color: #fff;
+    padding: 40px 20px; /* Adjust padding as needed */
+    width: 100%; /* Ensure the container takes the full width */
+  }
+  
+  /* Headings and Paragraphs */
+  h1 {
+    font-size: 1.25rem; /* Use rem for scalability */
+    color: #f0f0f0;
+    margin-bottom: 12px;
+  }
+  
+  p, a {
+    font-size: 1rem; /* Use rem for consistency */
+    line-height: 1.6;
+    color: #ccc;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  a:hover {
+    color: #fff;
+  }
+  
+  /* Footer Section 1 */
+  .footer-section1 {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #333;
+    width: 100%;
+  }
+  
+  .subscribe h1, .contactus h1 {
+    color: #ffffff;
+    font-weight: bold;
+  }
+  
+  .subscribe input[type="search"] {
+    padding: 10px;
+    width: calc(100% - 110px);
+    max-width: 280px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: #222;
+    color: #fff;
+    margin-right: 10px;
+  }
+  
+  .subscribe button {
+    padding: 10px 15px;
+    background-color: #f90;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition */
+  }
+  
+  .subscribe button:hover {
+    background-color: #e87e04;
+  }
+  
+  .contactus p {
+    margin: 8px 0;
+  }
+  
+  /* Footer Last Section */
+  .footer-last-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 0;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  .footer-last-section div {
+    flex: 1 1 200px;
+  }
+  
+  .footer-last-section h1 {
+    margin-bottom: 10px;
+  }
+  
+  .icon-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+  }
+  
+  .icon-container span {
+    font-size: 28px;
+    color: #ccc;
+    cursor: pointer;
+  }
+  
+  .icon-container span:hover {
+    color: #f0f0f0;
+  }
+  
+  /* Footer Bottom */
+  .para1 {
+    text-align: center;
+    font-size: 12px;
+    color: #777;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+  }
+  
+  .para1 span {
+    margin-left: 5px;
+    font-size: 12px;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .footer-section1, .footer-last-section {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .subscribe input[type="search"] {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .icon-container {
+      justify-content: center;
+    }
+  }
