@@ -9,7 +9,7 @@ import jwt from "jsonwebtoken"
 
 const app = express();
 app.use(cors({
-  origin: "http://localhost:3000", // Replace with your frontend URL
+  origin: "https://vmart-yxk6.onrender.com", // Replace with your frontend URL
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true, // If you need cookies or other credentials
 }));
