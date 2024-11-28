@@ -12,10 +12,19 @@ const app = express();
 
 
 app.use(cors({
-  origin: ["https://vinaymart.vercel.app", "https://vmart-yxk6.onrender.com"], // Replace with your frontend URLs
+  origin: [
+    "http://localhost:3000",  // Local development URL
+    "https://vinaymart.vercel.app",  // Production frontend URL
+    "https://vmart-yxk6.onrender.com"  // Backend live URL
+  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
+  credentials: true, // Allow sending cookies
+  preflightContinue: true, // Ensures preflight responses are sent for every request
+  optionsSuccessStatus: 200, // Fix for older browsers
 }));
+
+
+
 
 
 app.use(express.json());  // for parsing application/json
