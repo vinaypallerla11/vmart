@@ -12,7 +12,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: ["http://localhost:3000", "https://vmart-yxk6.onrender.com"], // Replace with your frontend URLs
+  origin: ["https://vinaymart.vercel.app", "https://vmart-yxk6.onrender.com"], // Replace with your frontend URLs
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
