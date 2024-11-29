@@ -18,7 +18,6 @@ app.use(cors({
   optionsSuccessStatus: 200,
 }));
 
-
 app.use(express.json());  // for parsing application/json
 
 // Environment Variables
