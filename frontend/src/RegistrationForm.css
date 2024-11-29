@@ -1,125 +1,4 @@
-.registration-form-container {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-  }
-  
-  .heading {
-    text-align: center;
-  }
-  
-  .form-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .input-label {
-    margin-bottom: 5px;
-  }
-  
-  .input-field {
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .submit-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .submit-button-login {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  @media (max-width: 768px) {
-    .registration-form-container {
-      padding: 10px;
-    }
-  }
-  
-  @media (max-width: 576px) {
-    .registration-form-container {
-      max-width: 400px;
-    }
-  }
-  
-  @media (max-width: 375px) {
-    .registration-form-container {
-      max-width: 300px;
-    }
-  }
-  
-  
-  .submit-button,
-  .submit-button-login {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: calc(50% - 10px); /* Set the width for both buttons */
-    font-size: 16px; /* Set font size */
-    margin: 0 5px; /* Add margin for spacing between buttons */
-  }
-  
-  .submit-button {
-    background-color: #007bff; /* Blue color */
-    color: white;
-  }
-  
-  .submit-button-login {
-    background-color: #28a745; /* Green color */
-    color: white;
-  }
-
-
-  .highlight {
-    border-color: red; /* Highlight empty input fields with red border */
-  }
-  
-  .error-message {
-    color: red;
-    margin-top: 5px; /* Add margin to the error message */
-  }
-
-  .highlight {
-    border-color: red; /* Highlight empty input fields with red border */
-  }
-  
-  .input-field {
-  margin-bottom: 10px;
-  padding: 8px 35px 8px 8px; /* Add padding on the right side for the icon */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.password-input-container {
-  position: relative;
-}
-
-.password-toggle {
-  position: absolute;
-  top: 50%;
-  right: 8px; /* Adjust position based on padding */
-  transform: translateY(-50%);
-  cursor: pointer;
-}
-
+/* General Container */
 .registration-form-container {
   max-width: 600px;
   margin: auto;
@@ -128,8 +7,16 @@
 
 .heading {
   text-align: center;
+  color: black;
 }
 
+.easy-register {
+  text-align: center;
+  color: black;
+  padding-bottom:10px;
+}
+
+/* Form Styles */
 .form-container {
   display: flex;
   flex-direction: column;
@@ -159,7 +46,74 @@
   cursor: pointer;
 }
 
+/* Highlighted Input Fields */
+.highlight {
+  border-color: red;
+}
+
+/* Error Message */
+.error-message {
+  color: red;
+  margin-top: 5px; /* Add margin to the error message */
+}
+
+/* Button Container */
 .button-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 15px; /* Space between buttons */
+}
+
+/* Sign Up Button (Primary Button) */
+.submit-button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #1877f2; /* Facebook Blue */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #165eab; /* Darker blue on hover */
+  transform: translateY(-2px); /* Slight upward shift on hover */
+}
+
+/* Already Have an Account Button (Secondary Button) */
+.submit-button-login {
+  padding: 12px 20px;
+  border: 1px solid #1877f2; /* Blue border */
+  border-radius: 5px;
+  background-color: transparent; /* Transparent background */
+  color: #1877f2; /* Blue text color */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button-login:hover {
+  background-color: #f0f2f5; /* Light grey background on hover */
+  transform: translateY(-2px); /* Slight upward shift on hover */
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .registration-form-container {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .registration-form-container {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 375px) {
+  .registration-form-container {
+    max-width: 300px;
+  }
 }

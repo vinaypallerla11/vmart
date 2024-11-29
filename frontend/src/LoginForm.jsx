@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,22 +8,17 @@ import './LoginForm.css';
 const LoginForm = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // Track password visibility
-  const [showSubmitError, setShowSubmitError] = useState(false);
-  const [usernameError, setUsernameError] = useState(false); // Track username error
-  const [passwordError, setPasswordError] = useState(false); // Track password error
+  const [showPassword, setShowPassword] = useState(false);  // Track password visibility
+  const [showSubmitError, setShowSubmitError] = useState(false);  // Track submit error
+  const [usernameError, setUsernameError] = useState(false);  // Track username error
+  const [passwordError, setPasswordError] = useState(false);  // Track password error
+  const [loading, setLoading] = useState(false);  // Track loading state
   const navigate = useNavigate();
 
-  const onSubmitSuccess = (token) => {
-    Cookies.set('jwt_token', token, { expires: 30 });
-    navigate('/', { replace: true });
-  };
-
-  const onSubmitFailure = (errorMsg) => {
-    setShowSubmitError(true);
-    setUsernameError(true); // Highlight username field
-    setPasswordError(true); // Highlight password field
-  };
+  // Define togglePasswordVisibility with useCallback at the top level
+  const togglePasswordVisibility = useCallback(() => {
+    setShowPassword((prevState) => !prevState);
+  }, []); // useCallback should be called without conditions
 
   const RegisterForm = () => {
     navigate('/register');
@@ -37,10 +32,29 @@ const LoginForm = () => {
     navigate('/forgot-password');
   };
 
+  // Handle error responses from the server
+  const handleErrorResponse = (errorData) => {
+    setUsernameError(true);
+    setPasswordError(true);
+    setShowSubmitError(true);
+
+    if (errorData.error_type === 'username_error') {
+      setUsernameError(true);
+      setPasswordError(false);
+    } else if (errorData.error_type === 'password_error') {
+      setUsernameError(false);
+      setPasswordError(true);
+    }
+  };
+
+  // Submit form and handle login logic
   const formSubmit = async (e) => {
     e.preventDefault();
+    setShowSubmitError(false);  // Reset error message before submitting
+    setUsernameError(false);    // Reset username error before submitting
+    setPasswordError(false);    // Reset password error before submitting
+
     const userDetails = { username, password };
-    console.log(userDetails);
     const url = 'https://vmart-yxk6.onrender.com/login';
     const options = {
       method: 'POST',
@@ -51,34 +65,25 @@ const LoginForm = () => {
     };
 
     try {
-      const response = await fetch(url, options);
+      setLoading(true);  // Set loading to true before starting the request
 
-      if (response.ok === true) {
+      const response = await fetch(url, options);
+      if (response.ok) {
         const data = await response.json();
-        console.log(response);
-        console.log(data);
-        onSubmitSuccess(data.token);
+        Cookies.set('jwt_token', data.token, { expires: 30 });
+        navigate('/', { replace: true });
       } else {
         const errorData = await response.json();
-        if (errorData.error_type === 'username_error') {
-          setUsernameError(true);
-          setPasswordError(false);
-        } else if (errorData.error_type === 'password_error') {
-          setUsernameError(false);
-          setPasswordError(true);
-        } else {
-          setUsernameError(true);
-          setPasswordError(true);
-          onSubmitFailure(errorData.error_msg);
-        }
+        handleErrorResponse(errorData);  // Handle server-side errors
       }
     } catch (error) {
-      setUsernameError(true);
-      setPasswordError(true);
-      onSubmitFailure("Invalid username or password");
+      handleErrorResponse({ error_msg: 'Network error, please try again.' });  // Handle network error
+    } finally {
+      setLoading(false);  // Set loading to false once the request is complete
     }
   };
 
+  // Redirect to home page if token exists
   const token = Cookies.get('jwt_token');
   if (token !== undefined) {
     return <Navigate to="/" />;
@@ -88,29 +93,87 @@ const LoginForm = () => {
     <div className="empForm">
       <div className="section">
         <form onSubmit={formSubmit} className='form-container'>
-          <img src="https://res.cloudinary.com/ddehbjyiy/image/upload/v1704763899/VTrendz_gfuzbu.webp" alt="pic" className='vtrendz' />
-          <label htmlFor="username" className={`input-label ${usernameError ? 'error' : ''}`}>User Name:</label>
-          <input type="text" className={`input-field ${usernameError ? 'error' : ''}`} id="username" name='username' placeholder='Username' onChange={(e) => setUserName(e.target.value)} />
+          <img
+            src="https://res.cloudinary.com/ddehbjyiy/image/upload/v1704763899/VTrendz_gfuzbu.webp"
+            alt="pic"
+            className='vtrendz'
+          />
+          <label
+            htmlFor="username"
+            className={`input-label ${usernameError ? 'error' : ''}`}
+          >
+            User Name:
+          </label>
+          <input
+            type="text"
+            className={`input-field ${usernameError ? 'error' : ''}`}
+            id="username"
+            name='username'
+            placeholder='Username'
+            onChange={(e) => setUserName(e.target.value)}
+          />
 
-          <label htmlFor="password" className={`input-label ${passwordError ? 'error' : ''}`}>Password:</label>
+          <label
+            htmlFor="password"
+            className={`input-label ${passwordError ? 'error' : ''}`}
+          >
+            Password:
+          </label>
           <div className="password-input-container">
-            <input type={showPassword ? 'text' : 'password'} className={`input-field ${passwordError ? 'error' : ''}`} id="password" name='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
-            <span className="password-toggle" onClick={() => setShowPassword(!showPassword)}>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              className={`input-field ${passwordError ? 'error' : ''}`}
+              id="password"
+              name='password'
+              placeholder='Password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <span className="password-toggle" onClick={togglePasswordVisibility}>
               <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
             </span>
           </div>
 
           <div className='button-container'>
-            <button type="submit" className="submit-button">Log In</button>
+            <button
+              type="submit"
+              className="submit-button"
+              disabled={loading}
+            >
+              {loading ? 'Logging In...' : 'Log In'}
+            </button>
           </div>
-          {showSubmitError && <p className='error-msg'>Invalid username or password</p>}
+
+          {showSubmitError && (
+            <p className='error-msg'>
+              Invalid username or password
+            </p>
+          )}
 
           <div className="forgot-links">
-            <button type="button" onClick={ForgotUsername} className="forgot-button">Forgot Username?</button>
-            <button type="button" onClick={ForgotPassword} className="forgot-button">Forgot Password?</button>
+            <button
+              type="button"
+              onClick={ForgotUsername}
+              className="forgot-button"
+            >
+              Forgot Username?
+            </button>
+            <button
+              type="button"
+              onClick={ForgotPassword}
+              className="forgot-button"
+            >
+              Forgot Password?
+            </button>
           </div>
         </form>
-        <button type="button" onClick={RegisterForm} className='create-button'>Create New Account</button>
+        <button
+          type="button"
+          onClick={RegisterForm}
+          className='create-button'
+        >
+          Create New Account
+        </button>
       </div>
     </div>
   );

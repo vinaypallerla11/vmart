@@ -72,6 +72,7 @@ const RegistrationForm = () => {
     <div className="registration-form-container">
       <div className="section">
         <h1 className='heading'>Create a new account</h1>
+        <p className='easy-register'>It's quick and easy.</p>
         <form onSubmit={formSubmit} className='form-container'>
           <label htmlFor="username" className="input-label">Username:</label>
           <input type="text" className={`input-field ${formSubmitted && !username && 'highlight'}`} id="username" name='username' placeholder='Username' value={username} onChange={(e) => setUserName(e.target.value)} />
@@ -91,8 +92,8 @@ const RegistrationForm = () => {
           <input type="text" className={`input-field ${formSubmitted && !mobile && 'highlight'}`} id="mobile" name='mobile' placeholder='Mobile' value={mobile} onChange={(e) => setMobile(e.target.value)} />
 
           <div className='button-container'>
-            <button type="submit" className="submit-button">Register</button>
-            <button className="submit-button-login" onClick={LoginForm}>Login</button>
+            <button type="submit" className="submit-button">Sign Up</button>
+            <button className="submit-button-login" onClick={LoginForm}>Already have an account?</button>
           </div>
         </form>
       </div>
