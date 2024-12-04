@@ -61,7 +61,7 @@ const RegistrationForm = () => {
       return;
     }
 
-    const url = 'http://localhost:8000/registers/';
+    const url = 'https://vinaymart.vercel.app/registers/';
     const options = {
       method: 'POST',
       headers: {
