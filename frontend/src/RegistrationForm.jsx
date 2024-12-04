@@ -61,7 +61,7 @@ const RegistrationForm = () => {
       return;
     }
 
-    const url = 'https://vinaymart.vercel.app/registers/';
+    const url = 'https://vmart-yxk6.onrender.com/registers/';
     const options = {
       method: 'POST',
       headers: {
