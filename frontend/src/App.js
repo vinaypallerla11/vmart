@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import ForgotUsername from './components/ForgotUsername/ForgotUsername';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import AdminDashboard from './AdminDashboard/AdminDashboard'
 
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/forgot-username" element={<ForgotUsername />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard/>} />
         </Routes>          
       </CartProvider>
     </BrowserRouter>

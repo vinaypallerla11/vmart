@@ -23,6 +23,8 @@ app.use(express.json());  // for parsing application/json
 // Environment Variables
 const PORT = process.env.PORT || 9000;
 const MONGO_URL = process.env.MONGO_URL;
+const JWT_SECRET = process.env.JWT_SECRET;
+const SECRET_KEY = process.env.ADMIN_SECRET_KEY || 'admin_vinay';
 
 // Database Connection
 mongoose.connect(MONGO_URL, { serverSelectionTimeoutMS: 5000 })
@@ -38,12 +40,14 @@ mongoose.connect(MONGO_URL, { serverSelectionTimeoutMS: 5000 })
 
 // User Schema
 const userSchema = new mongoose.Schema({
-  username: String,
-  password: String,
-  email: String,
-  mobile: Number,
-  otp: String,
-  otpExpiry: Date,
+  username: { type: String, required: true },
+  password: { type: String, required: true },
+  email: { type: String, required: true },
+  mobile: { type: String, required: true },
+  role: { type: String, enum: ['user', 'admin'], default: 'user' },  // Ensure 'role' is in the schema
+  secretKey: { type: String },
+  otp: { type: String },
+  otpExpiry: { type: Date }
 });
 const userModel = mongoose.model("users", userSchema);
 
@@ -69,32 +73,56 @@ const sendOTPEmail = async (email, otp) => {
 // Generate OTP
 const generateOTP = () => crypto.randomInt(100000, 999999).toString();
 
-// Authentication Middleware
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (!token) return res.status(401).json({ error: "Access token not provided" });
+// Verify Token (Middleware for authentication)
+const verifyToken = (req, res, next) => {
+  const token = req.cookies.jwt_token;
+  if (!token) {
+    return res.status(403).json({ error: 'No token provided' });
+  }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ error: "Invalid or expired token" });
-    req.user = user;
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ error: 'Invalid or expired token' });
+    }
+    req.user = decoded;
     next();
   });
 };
 
 // Routes
 
-// Register User
 app.post("/registers/", async (req, res) => {
-  const { username, password, email, mobile } = req.body;
+  const { username, password, email, mobile, role, secretKey } = req.body;
+
   try {
+    // Admin Key Validation: Allow only admins to select the 'admin' role
+    if (role === "admin" && (!secretKey || secretKey !== SECRET_KEY)) {
+      return res.status(403).json({ error: "Invalid admin secret key" });
+    }
+
+    console.log("Received Role:", role); // Debugging line
+    console.log("Received Secret Key:", secretKey); // Debugging line
+
     const existingUser = await userModel.findOne({ username });
     if (existingUser) return res.status(400).json({ error: "User already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new userModel({ username, password: hashedPassword, email, mobile });
+
+    // Default to 'user' if no role is provided
+    const newUserRole = role === "admin" ? "admin" : "user"; 
+    const newUser = new userModel({ 
+      username, 
+      password: hashedPassword, 
+      email, 
+      mobile, 
+      role: newUserRole, 
+      secretKey // Ensure secretKey is passed here if provided
+    });
+
+    console.log('User Data Before Saving:', newUser);  // Debugging line to check the user data
+
     await newUser.save();
-    res.json({ message: "User registered successfully" });
+    res.json({ message: `${newUserRole} registered successfully` });
   } catch (error) {
     console.error("Error registering user:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -102,19 +130,24 @@ app.post("/registers/", async (req, res) => {
 });
 
 
-// Login User
+// Login User (or Admin)
 app.post("/login/", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, role } = req.body;
   try {
     const user = await userModel.findOne({ username });
     if (!user) return res.status(404).json({ error: "User not found" });
 
+    // Admin login check
+    if (role === "admin" && role !== user.role) {
+      return res.status(403).json({ error: "Invalid role for admin login" });
+    }
+
     const isPasswordMatched = await bcrypt.compare(password, user.password);
     if (!isPasswordMatched) return res.status(401).json({ error: "Invalid password" });
 
-    const payload = { username: user.username };
-    const jwtToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d" });
-    res.json({ token: jwtToken });
+    const payload = { username: user.username, role: user.role };
+    const jwtToken = jwt.sign(payload, JWT_SECRET, { expiresIn: "30d" });
+    res.json({ token: jwtToken, role: user.role }); // Send role in the response
   } catch (error) {
     console.error("Error logging in:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -140,11 +173,11 @@ app.post("/forgot-password", async (req, res) => {
   }
 });
 
+// Verify Password Reset
 app.post("/verify-password-reset", async (req, res) => {
-  try {
-    const { email, code, newPassword } = req.body;
+  const { email, code, newPassword } = req.body;
 
-    // Validate OTP and reset password logic
+  try {
     const user = await userModel.findOne({ email });
     if (!user || user.otp !== code || Date.now() > user.otpExpiry) {
       return res.status(400).json({ error: "Invalid or expired OTP" });
@@ -157,28 +190,6 @@ app.post("/verify-password-reset", async (req, res) => {
     user.otpExpiry = undefined;
     await user.save();
 
-    res.json({ message: "Password reset successful" });
-  } catch (error) {
-    console.error("Error resetting password:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-
-// Reset Password
-app.post("/reset-password", async (req, res) => {
-  const { email, otp, newPassword } = req.body;
-  try {
-    const user = await userModel.findOne({ email });
-    if (!user || user.otp !== otp || Date.now() > user.otpExpiry) {
-      return res.status(400).json({ error: "Invalid or expired OTP" });
-    }
-
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    user.password = hashedPassword;
-    user.otp = undefined;
-    user.otpExpiry = undefined;
-    await user.save();
     res.json({ message: "Password reset successful" });
   } catch (error) {
     console.error("Error resetting password:", error);
@@ -206,11 +217,9 @@ app.post("/forgot-username", async (req, res) => {
 });
 
 // Verify Username
-// Verify OTP for Forgot Username (Step 2 - Username Retrieval)
 app.post("/verify-username", async (req, res) => {
-  const { email, mobile, otp, newUsername } = req.body;
-  const user = email ? await userModel.findOne({ email }) : await userModel.findOne({ mobile });
-  
+  const { email, otp, newUsername } = req.body;
+  const user = await userModel.findOne({ email });
   if (!user) {
     return res.status(404).json({ error: "User not found" });
   }
@@ -230,8 +239,12 @@ app.post("/verify-username", async (req, res) => {
   res.json({ username: user.username });
 });
 
-// Get All Users (Admin/Testing)
-app.get("/getusers/", async (req, res) => {
+// Get All Users (Admin only)
+app.get("/getusers/", verifyToken, async (req, res) => {
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ error: "Forbidden. Admins only." });
+  }
+
   try {
     const users = await userModel.find();
     res.json({ data: users });
@@ -240,3 +253,13 @@ app.get("/getusers/", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+// Admin Dashboard (Admin only)
+app.get('/admin-dashboard', verifyToken, (req, res) => {
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Not authorized to access this route' });
+  }
+  res.json({ message: 'Welcome to Admin Dashboard' });
+});
+
+export default app;
