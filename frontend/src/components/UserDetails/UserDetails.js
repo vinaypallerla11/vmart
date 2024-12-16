@@ -25,7 +25,7 @@ const UserDetails = () => {
           throw new Error("JWT Token not found");
         }
 
-        const response = await fetch("http://localhost:8000/admin/users", {
+        const response = await fetch("https://vmart-yxk6.onrender.com/admin/users", {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${jwtToken}`,
@@ -59,7 +59,7 @@ const UserDetails = () => {
     }
   
     try {
-      const response = await fetch(`http://localhost:8000/admin/users/${userId}`, {
+      const response = await fetch(`https://vmart-yxk6.onrender.com/admin/users/${userId}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${jwtToken}`, // Ensure the token is passed correctly
