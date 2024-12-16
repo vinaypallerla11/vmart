@@ -20,7 +20,6 @@ app.use(cors({
   optionsSuccessStatus: 200,
 }));
 
-
 // app.use(cors({
 //   origin: 'http://localhost:3000',  // Allow frontend to make requests
 //   credentials: true,               // Allow sending cookies (important if you're using sessions)

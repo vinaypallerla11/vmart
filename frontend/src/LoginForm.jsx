@@ -50,7 +50,7 @@ const LoginForm = () => {
 
     // Include role in request body
     const userDetails = { username, password, role };
-    const url = 'http://localhost:8000/login/';
+    const url = 'https://vmart-yxk6.onrender.com/login/';
     const options = {
       method: 'POST',
       headers: {

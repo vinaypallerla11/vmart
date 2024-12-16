@@ -28,7 +28,7 @@ const AdminProducts = () => {
 
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:8000/admin/products', {
+        const response = await fetch('https://vmart-yxk6.onrender.com/admin/products', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -107,7 +107,7 @@ const AdminProducts = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/admin/products', {
+      const response = await fetch('https://vmart-yxk6.onrender.com/admin/products', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

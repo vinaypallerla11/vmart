@@ -32,7 +32,7 @@ const AdminDashboard = () => {
           return;
         }
 
-        const response = await fetch('http://localhost:8000/admin/users', {
+        const response = await fetch('https://vmart-yxk6.onrender.com/admin/users', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
