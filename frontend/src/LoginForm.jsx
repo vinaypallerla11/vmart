@@ -50,7 +50,7 @@ const LoginForm = () => {
 
     // Include role in request body
     const userDetails = { username, password, role };
-    const url = 'https://vmart-yxk6.onrender.com/login/';
+    const url = 'http://localhost:8000/login/';
     const options = {
       method: 'POST',
       headers: {
@@ -72,7 +72,7 @@ const LoginForm = () => {
         // Redirect based on role
         console.log('API Response:', data); // Debugging: Ensure correct response
         if (data.role === 'admin') {
-          navigate('/admin-dashboard'); // Admin dashboard route
+          navigate('/admin/dashboard'); // Admin dashboard route
         } else {
           navigate('/'); // Home or user dashboard
         }

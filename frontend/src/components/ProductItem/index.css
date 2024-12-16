@@ -1,59 +1,69 @@
-
 /* index.css or ProductItem.css */
 
+/* Container to hold all product items */
 .products-container {
     display: flex;
     flex-wrap: wrap; /* Allow items to wrap to the next line */
     justify-content: flex-start; /* Align items to the left */
     padding: 10px; /* Padding around the container */
+    gap: 10px; /* Adds consistent spacing between product items */
 }
 
+/* Product item container */
 .product-item {
     border: 1px solid #e7e7e7; /* Light border around product items */
-    border-radius: 4px; /* Rounded corners */
-    padding: 10px; /* Padding inside the item */
+    border-radius: 8px; /* More rounded corners */
+    padding: 15px; /* Padding inside the item */
     margin: 5px; /* Margin between items */
-    width: calc(24% - 5px); /* Four items per row with reduced margin */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation effect */
-    transition: transform 0.2s; /* Smooth transition for hover effect */
+    width: calc(24% - 10px); /* Four items per row with reduced margin */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
     background-color: #fff; /* White background for product items */
-    margin-bottom: 10px;
+    margin-bottom: 20px; /* Bottom margin for spacing */
 }
 
+/* Hover effect for product item */
 .product-item:hover {
-    transform: scale(1.02); /* Slight zoom on hover */
+    transform: scale(1.05); /* Slight zoom on hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Darker shadow for emphasis */
 }
 
+/* Image styling */
 .product-item img {
     max-width: 100%; /* Ensure image fits within the container */
     height: 200px; /* Fixed height for uniformity */
     object-fit: contain; /* Maintain aspect ratio without stretching */
-    margin-bottom: 8px; /* Space between image and text */
+    margin-bottom: 12px; /* Space between image and text */
 }
 
+/* Product title */
 .product-item h2 {
-    font-size: 18px; /* Adjust font size for title */
+    font-size: 16px; /* Adjust font size for title */
     margin: 8px 0; /* Margin above and below title */
     color: #333; /* Darker color for better readability */
-    font-family: 'Open Sans';
-    font-weight: none;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600; /* Slightly bolder title */
 }
 
+/* Product price */
 .product-item p {
-    font-size: 1em; /* Adjust font size for the price */
+    font-size: 1.1em; /* Adjust font size for the price */
     color: #b12704; /* Amazon-like color for price (red) */
     margin: 4px 0; /* Margin above and below price */
+    font-weight: bold; /* Bold font for price */
 }
 
+/* Product button styling */
 .product-item button {
-    padding: 8px 12px; /* Padding inside the button */
-    background-color: #ffa41c; /* Amazon-like orange color */
+    padding: 10px 15px; /* Padding inside the button */
+    background-color: #000; /* Black background color */
     color: white; /* White text */
     border: none; /* No border */
     border-radius: 4px; /* Rounded button corners */
     cursor: pointer; /* Change cursor to pointer on hover */
-    transition: background-color 0.2s; /* Smooth transition for background color */
-    font-size: 0.9em; /* Font size for button text */
+    transition: background-color 0.2s, transform 0.2s ease; /* Smooth transition for background color */
+    font-size: 1em; /* Font size for button text */
+    margin-top: 10px; /* Space between button and product description */
 }
 
 /* Button focus style for accessibility */
@@ -63,7 +73,13 @@
 
 /* Button hover effect */
 .product-item button:hover {
-    background-color: #ff8c00; /* Darker orange on hover */
+    background-color: #333; /* Darker shade of black on hover */
+}
+
+/* Button active (clicked) style */
+.product-item button:active {
+    transform: scale(0.98); /* Slightly shrink the button when clicked */
+    background-color: #444; /* Darker background when active */
 }
 
 /* Media Queries for Responsiveness */
@@ -71,7 +87,6 @@
     .product-item {
         width: calc(33.33% - 10px); /* Three items per row on medium screens */
     }
-    
 }
 
 @media (max-width: 800px) {
@@ -86,12 +101,13 @@
     }
 }
 
-.product-title{
-    font-family: 'Open Sans';
-    color:red;
+.product-title {
+    font-family: 'Open Sans', sans-serif;
+    color: #b12704; /* Price color for consistency */
+    font-weight: 600; /* Slightly bold for emphasis */
 }
 
-.card-section{
+.card-section {
     display: flex;
     flex-direction: column;
     justify-content: space-between;

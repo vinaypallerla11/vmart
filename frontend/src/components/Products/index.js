@@ -4,13 +4,14 @@ import Navbar from '../Navbar';
 import './index.css';
 import Footer from '../Footer';
 import { Link } from 'react-router-dom';
-import { FaTimes, FaMicrophone } from 'react-icons/fa'; // Import necessary icons
+import { FaTimes, FaMicrophone } from 'react-icons/fa';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [recognizing, setRecognizing] = useState(false); // State to manage voice recognition
+  const [recognizing, setRecognizing] = useState(false);
+  const [category, setCategory] = useState(''); // New state to handle category
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -30,9 +31,11 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  const filteredProducts = products.filter(product =>
-    product.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredProducts = products.filter(product => {
+    const matchesSearchQuery = product.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = category ? product.category.toLowerCase() === category.toLowerCase() : true;
+    return matchesSearchQuery && matchesCategory;
+  });
 
   const handleClearSearch = () => {
     setSearchQuery('');
@@ -87,7 +90,7 @@ const Products = () => {
 
       <div className="marquee-container">
         <div className="marquee-text">
-          Welcome to vinay trendz store! Check out our latest products and deals!
+          Welcome to Vinay Trendz store! Check out our latest products and deals!
         </div>
       </div>
 
@@ -127,6 +130,15 @@ const Products = () => {
         </form>
       </div>
 
+      {/* Category Buttons */}
+      <div className="categories-container">
+        <button onClick={() => setCategory('')} className="category-button">All</button>
+        <button onClick={() => setCategory('men\'s clothing')} className="category-button">Men's Clothing</button>
+        <button onClick={() => setCategory('women\'s clothing')} className="category-button">Women's Clothing</button>
+        <button onClick={() => setCategory('jewelery')} className="category-button">Jewelry</button>
+        <button onClick={() => setCategory('electronics')} className="category-button">Electronics</button>
+      </div>
+
       <div className="products-container">
         {filteredProducts.length > 0 ? (
           filteredProducts.map(product => (
@@ -136,6 +148,7 @@ const Products = () => {
           <p>No products found.</p>
         )}
       </div>
+
       <Footer />
     </div>
   );

@@ -1,0 +1,157 @@
+/* Header.css */
+
+/* Base Styles for Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #003366; /* Flipkart's deep blue */
+    color: white;
+    padding: 15px 30px 15px 30px; /* Added bottom padding */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    margin-bottom: 20px; /* Added bottom margin for spacing */
+  }
+  
+  .header .search-bar {
+    width: 50%;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #333;
+  }
+  
+  .header .search-bar:focus {
+    outline: none;
+    border-color: #0066cc;
+  }
+  
+  .header .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header .user-info span {
+    font-size: 16px;
+    margin-right: 20px;
+  }
+  
+  .header .logout-button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .header .logout-button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Desktop View */
+  @media (min-width: 1025px) {
+    .header {
+      padding: 15px 30px 15px 30px; /* Bottom padding remains */
+      margin-bottom: 20px; /* Keep bottom margin for desktop */
+    }
+  
+    .header .search-bar {
+      width: 50%;
+    }
+  
+    .header .user-info span {
+      font-size: 16px;
+    }
+  
+    .header .logout-button {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  }
+  
+  /* Tablet View */
+  @media (max-width: 1024px) and (min-width: 768px) {
+    .header {
+      padding: 12px 20px 12px 20px; /* Adjusted padding for tablet */
+      margin-bottom: 18px; /* Bottom margin for tablet */
+    }
+  
+    .header .search-bar {
+      width: 60%;
+    }
+  
+    .header .user-info span {
+      font-size: 14px;
+    }
+  
+    .header .logout-button {
+      padding: 8px 16px;
+      font-size: 12px;
+    }
+  }
+  
+  /* Mobile Landscape View */
+  @media (max-width: 767px) and (min-width: 480px) {
+    .header {
+      padding: 10px 15px 10px 15px; /* Adjusted padding for mobile landscape */
+      margin-bottom: 16px; /* Bottom margin for mobile landscape */
+    }
+  
+    .header .search-bar {
+      width: 70%;
+    }
+  
+    .header .user-info span {
+      font-size: 14px;
+    }
+  
+    .header .logout-button {
+      padding: 8px 16px;
+      font-size: 12px;
+    }
+  }
+  
+  /* Mobile Portrait View */
+  @media (max-width: 479px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px 15px 15px 15px; /* Added bottom padding for mobile portrait */
+      margin-bottom: 14px; /* Bottom margin for mobile portrait */
+    }
+  
+    .header .search-bar {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+  
+    .header .user-info {
+      margin-top: 10px;
+      text-align: left;
+      width: 100%;
+    }
+  
+    .header .user-info span {
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+  
+    .header .logout-button {
+      padding: 8px 15px;
+      font-size: 12px;
+      margin-top: 10px;
+      width: 100%;
+    }
+  }
+  

@@ -9,7 +9,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import ForgotUsername from './components/ForgotUsername/ForgotUsername';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
-import AdminDashboard from './AdminDashboard/AdminDashboard'
+import AdminDashboard from './components/AdminDashboard/AdminDashboard';
+import UserDetails from './components/UserDetails/UserDetails';
+import AdminProducts from './components/AdminProducts/AdminProducts';
 
 
 const App = () => {
@@ -25,7 +27,9 @@ const App = () => {
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/forgot-username" element={<ForgotUsername />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/admin-dashboard" element={<AdminDashboard/>} />
+          <Route path="/admin/dashboard" element={<AdminDashboard/>} />
+          <Route path="/admin/users" element={<UserDetails />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
         </Routes>          
       </CartProvider>
     </BrowserRouter>
