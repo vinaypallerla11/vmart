@@ -11,8 +11,10 @@ const AdminProducts = () => {
     description: '',
     category: '',
     image: '',
-    ratingRate: '',
-    ratingCount: '',
+    rating: {
+      rate: '',
+      count: '',
+    },
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -53,10 +55,21 @@ const AdminProducts = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    const nameParts = name.split('.');
+    if (nameParts.length === 2) {
+      setFormData((prevData) => ({
+        ...prevData,
+        [nameParts[0]]: {
+          ...prevData[nameParts[0]],
+          [nameParts[1]]: value,
+        },
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const isValidUrl = (str) => {
@@ -78,12 +91,12 @@ const AdminProducts = () => {
       return;
     }
 
-    if (!formData.title || !formData.price || !formData.description || !formData.category || !formData.image || !formData.ratingRate || !formData.ratingCount) {
+    if (!formData.title || !formData.price || !formData.description || !formData.category || !formData.image || !formData.rating.rate || !formData.rating.count) {
       alert('Please fill out all fields.');
       return;
     }
 
-    if (isNaN(parseFloat(formData.price)) || isNaN(parseFloat(formData.ratingRate)) || isNaN(parseInt(formData.ratingCount))) {
+    if (isNaN(parseFloat(formData.price)) || isNaN(parseFloat(formData.rating.rate)) || isNaN(parseInt(formData.rating.count))) {
       alert('Please enter valid numbers for Price, Rating (Rate), and Rating (Count).');
       return;
     }
@@ -100,8 +113,8 @@ const AdminProducts = () => {
       category: formData.category,
       image: formData.image,
       rating: {
-        rate: parseFloat(formData.ratingRate),
-        count: parseInt(formData.ratingCount),
+        rate: parseFloat(formData.rating.rate),
+        count: parseInt(formData.rating.count),
       },
     };
 
@@ -130,8 +143,10 @@ const AdminProducts = () => {
         description: '',
         category: '',
         image: '',
-        ratingRate: '',
-        ratingCount: '',
+        rating: {
+          rate: '',
+          count: '',
+        },
       });
 
       alert('Product added successfully!');
@@ -201,8 +216,8 @@ const AdminProducts = () => {
           <label>Rating (Rate): </label>
           <input
             type="number"
-            name="ratingRate"
-            value={formData.ratingRate}
+            name="rating.rate"
+            value={formData.rating.rate}
             onChange={handleChange}
             required
             min="0"
@@ -213,8 +228,8 @@ const AdminProducts = () => {
           <label>Rating (Count): </label>
           <input
             type="number"
-            name="ratingCount"
-            value={formData.ratingCount}
+            name="rating.count"
+            value={formData.rating.count}
             onChange={handleChange}
             required
             min="0"

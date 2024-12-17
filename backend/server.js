@@ -418,6 +418,8 @@ app.get('/admin/dashboard', verifyToken, (req, res) => {
 // Admin: Create Product
 app.post("/admin/products", verifyToken, async (req, res) => {
   console.log("Received request to create a new product");
+  console.log("Headers:", req.headers); // Add this
+  console.log("Request body:", req.body); // Add this
 
   // Check if the user is an admin
   if (req.user.role !== "admin") {
@@ -485,13 +487,13 @@ app.post("/admin/products", verifyToken, async (req, res) => {
 });
 
 
-app.get("/admin/products", verifyToken, async (req, res) => {
+app.get("/admin/products", async (req, res) => {
   console.log("Received request to get all products");
 
   // Check if the user is an admin
-  if (req.user.role !== "admin") {
-    return res.status(403).json({ error: "Forbidden. Admins only." });
-  }
+  // if (req.user.role !== "admin") {
+  //   return res.status(403).json({ error: "Forbidden. Admins only." });
+  // }
 
   try {
     // Fetch all products from the database

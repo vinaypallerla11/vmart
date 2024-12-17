@@ -5,6 +5,8 @@ import './index.css';
 import Footer from '../Footer';
 import { Link } from 'react-router-dom';
 import { FaTimes, FaMicrophone } from 'react-icons/fa';
+import Cookies from 'js-cookie'; // Make sure to install js-cookie
+
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -14,20 +16,42 @@ const Products = () => {
   const [category, setCategory] = useState(''); // New state to handle category
 
   useEffect(() => {
+    //fetching 
+    const token = Cookies.get('jwt_token');
+    console.log('***************')
+    console.log(token)
     const fetchProducts = async () => {
       try {
-        const response = await fetch('https://vmart-yxk6.onrender.com/products');
+        const response = await fetch('https://vmart-yxk6.onrender.com/admin/products', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+    
         if (!response.ok) {
           throw new Error('Failed to fetch products');
         }
+    
         const data = await response.json();
-        setProducts(data);
+        console.log('Fetched data:', data); // Log the API response
+    
+        // Check if the fetched data contains a 'products' array and set the products state
+        if (Array.isArray(data.products)) {
+          setProducts(data.products); // Set the products from the response
+        } else {
+          console.error('Fetched data does not contain a valid products array:', data);
+          setProducts([]); // Set an empty array if products is not found
+        }
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
         setLoading(false);
       }
     };
+    
+    
     fetchProducts();
   }, []);
 
