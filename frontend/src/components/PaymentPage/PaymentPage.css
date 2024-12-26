@@ -1,0 +1,160 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Wrapper for the payment page */
+  .add-address-form {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Title */
+  .add-address-form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .add-address-form h3 {
+    color: #555;
+    margin-bottom: 15px;
+    margin-top: 30px;
+  }
+  
+  /* Form Labels */
+  label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  /* Form Inputs */
+  input[type="text"],
+  input[type="password"],
+  input[type="radio"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  input[type="radio"] {
+    width: auto;
+    margin-right: 10px;
+  }
+  
+  /* Checkbox */
+  input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  /* Error and Success Messages */
+  .error {
+    color: #ff4d4d;
+    background-color: #fff1f1;
+    padding: 10px;
+    border: 1px solid #ff4d4d;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+  
+  .success {
+    color: #4caf50;
+    background-color: #e8f5e9;
+    padding: 10px;
+    border: 1px solid #4caf50;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+  
+  /* Card Details Section */
+  .card-details {
+    margin-top: 15px;
+  }
+  
+  .card-details input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  /* UPI Details Section */
+  .upi-details input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  /* Submit Button */
+  button {
+    width: 100%;
+    padding: 15px;
+    background-color: #3399cc;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #007bb5;
+  }
+  
+  /* Responsive Styles */
+  @media screen and (max-width: 768px) {
+    .add-address-form {
+      padding: 15px;
+    }
+  
+    .add-address-form h2 {
+      font-size: 24px;
+    }
+  
+    label {
+      font-size: 13px;
+    }
+  
+    input[type="text"],
+    input[type="password"] {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    button {
+      padding: 12px;
+      font-size: 15px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .add-address-form {
+      padding: 10px;
+    }
+  
+    .add-address-form h2 {
+      font-size: 22px;
+    }
+  
+    input[type="text"],
+    input[type="password"] {
+      font-size: 13px;
+      padding: 6px;
+    }
+  
+    button {
+      padding: 10px;
+      font-size: 14px;
+    }
+  }
+  

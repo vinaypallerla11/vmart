@@ -67,14 +67,16 @@ const LoginForm = () => {
         const data = await response.json();
 
         // Save token and role to cookies
-        Cookies.set('jwt_token', data.token, { expires: 30 });
+        Cookies.set('jwt_token', data.token, { expires: 30, path: '/' });
 
         // Redirect based on role
         console.log('API Response:', data); // Debugging: Ensure correct response
         if (data.role === 'admin') {
           navigate('/admin/dashboard'); // Admin dashboard route
+        } else if (data.role === 'user') {
+          navigate('/'); // User home route
         } else {
-          navigate('/'); // Home or user dashboard
+          console.error('Unknown user role:', data.role);
         }
       } else {
         const errorData = await response.json();

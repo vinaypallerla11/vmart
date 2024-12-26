@@ -6,11 +6,13 @@ import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer"; // Email sending
 import crypto from "crypto"; // Generate OTP
 import jwt from "jsonwebtoken";
+import Razorpay from 'razorpay';
 import { v4 as uuidv4 } from 'uuid';  // Import uuidv4
 
 dotenv.config();
 const app = express();
 const products = [];
+
 
 app.use(cors({
   origin: ["http://localhost:3000", "https://vinaymart.vercel.app"],
@@ -67,23 +69,7 @@ const userSchema = new mongoose.Schema({
 const userModel = mongoose.model("users", userSchema);
 
 
-// Product Schema
-// const productSchema = new mongoose.Schema({
-//   title: { type: String, required: true },
-//   description: { type: String, required: true },
-//   price: { type: Number, required: true },
-//   category: { type: String, required: true },
-//   image: { type: String, required: true },  // Image URL should be required
-//   rating: {
-//     rate: { type: Number, required: true, min: 0, max: 5  },
-//     count: { type: Number, required: true, min: 0 }
-//   },
-//   createdAt: { type: Date, default: Date.now },
-// });
-
-// const productModel = mongoose.model("Product", productSchema);
-
-
+// product schema
 const productSchema = new mongoose.Schema({
   id: { type: String, unique: true },
   title: { type: String, required: true },
@@ -111,6 +97,25 @@ const productSchema = new mongoose.Schema({
 productSchema.index({ category: 1 });
 
 const productModel = mongoose.model('Product', productSchema);
+
+
+// Address Schema
+const addressSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
+  name: { type: String, required: true },
+  mobile: { type: String, required: true },
+  addressLine1: { type: String, required: true },
+  addressLine2: { type: String },
+  city: { type: String, required: true },
+  state: { type: String, required: true },
+  postalCode: { type: String, required: true },
+  country: { type: String, required: true },
+  isPrimary: { type: Boolean, default: false }, // Flag to mark the primary address
+  createdAt: { type: Date, default: Date.now }
+});
+
+const addressModel = mongoose.model("Address", addressSchema);
+
 
 
 
@@ -510,21 +515,129 @@ app.get("/admin/products", async (req, res) => {
   }
 });
 
+// Add Address
+app.post("/add-address", verifyToken, async (req, res) => {
+  const { name, mobile, addressLine1, addressLine2, city, state, postalCode, country, isPrimary } = req.body;
+  
+  try {
+    const user = await userModel.findById(req.user._id); // Get the logged-in user
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    // Create a new address
+    const newAddress = new addressModel({
+      userId: user._id,
+      name,
+      mobile,
+      addressLine1,
+      addressLine2,
+      city,
+      state,
+      postalCode,
+      country,
+      isPrimary
+    });
+
+    if (isPrimary) {
+      // Ensure only one address is marked as primary
+      await addressModel.updateMany({ userId: user._id }, { isPrimary: false });
+    }
+
+    await newAddress.save();
+    res.json({ message: "Address added successfully", address: newAddress });
+  } catch (error) {
+    console.error("Error adding address:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Get User Addresses
+app.get("/user/addresses", verifyToken, async (req, res) => {
+  try {
+    const addresses = await addressModel.find({ userId: req.user._id });
+    res.json({ addresses });
+  } catch (error) {
+    console.error("Error fetching addresses:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Delete Address
+app.delete("/user/address/:addressId", verifyToken, async (req, res) => {
+  const { addressId } = req.params;
+  
+  try {
+    const address = await addressModel.findOne({ _id: addressId, userId: req.user._id });
+    if (!address) return res.status(404).json({ error: "Address not found" });
+
+    await address.remove();
+    res.json({ message: "Address deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting address:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 
 
-// Get Total Product Count (Admin only)
-// app.get("/admin/product-count", verifyToken, async (req, res) => {
-//   if (req.user.role !== "admin") {
-//     return res.status(403).json({ error: "Forbidden. Admins only." });
-//   }
 
+// API endpoint to create a Razorpay order
+// app.post('/create-order', async (req, res) => {
 //   try {
-//     const totalProducts = await productModel.countDocuments();
-//     res.json({ totalProducts });
+//     const { amount } = req.body;
+
+//     // Create Razorpay order
+//     const options = {
+//       amount: amount * 100, // Convert to paise (smallest unit)
+//       currency: 'INR',
+//       receipt: `receipt_${new Date().getTime()}`,
+//     };
+
+//     const order = await razorpay.orders.create(options);
+//     res.json({ id: order.id, amount: options.amount });
 //   } catch (error) {
-//     res.status(500).json({ error: "Internal Server Error" });
+//     console.error(error);
+//     res.status(500).json({ error: 'Failed to create order' });
 //   }
 // });
+
+
+// API endpoint to verify Razorpay payment signature
+// app.post('/verify-payment', async (req, res) => {
+//   const { razorpay_order_id, razorpay_payment_id, razorpay_signature, address, products, amount } = req.body;
+
+//   try {
+//     const generatedSignature = razorpay.utils.sha256(
+//       razorpay_order_id + '|' + razorpay_payment_id
+//     );
+
+//     if (generatedSignature === razorpay_signature) {
+//       // Payment verified, now save the order to the database
+//       const orderDetails = {
+//         orderId: razorpay_order_id,
+//         paymentId: razorpay_payment_id,
+//         paymentStatus: 'Success',
+//         address,
+//         products,
+//         totalAmount: amount,
+//       };
+
+//       // Save order to MongoDB
+//       const order = new Order(orderDetails);
+//       await order.save();
+
+//       res.json({ success: true, message: 'Payment verified and order saved' });
+//     } else {
+//       res.status(400).json({ error: 'Payment verification failed' });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Payment verification failed' });
+//   }
+// });
+
+
+
+
+
 
 export default app;
