@@ -15,7 +15,7 @@ const products = [];
 
 
 app.use(cors({
-  origin: ["http://localhost:3000", "https://vinaymart.vercel.app"],
+  origin: ["http://localhost:3000", "https://vinaytrendz.vercel.app"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
   preflightContinue: true,
